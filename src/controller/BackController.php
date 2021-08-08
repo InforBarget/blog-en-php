@@ -6,6 +6,11 @@ use App\config\Parameter;
 
 class BackController extends Controller
 {
+    public function administration()
+    {
+        return $this->view->render('administration');
+    }
+
     public function addArticle(Parameter $post)
     {
         if($post->get('submit')) {
@@ -80,9 +85,24 @@ class BackController extends Controller
 
     public function logout()
     {
+        $this->logoutOrDelete('logout');
+    }
+
+    public function deleteAccount()
+    {
+        $this->userDAO->deleteAccount($this->session->get('pseudo'));
+        $this->logoutOrDelete('delete_account');
+    }
+
+    private function logoutOrDelete($param)
+    {
         $this->session->stop();
         $this->session->start();
-        $this->session->set('logout', 'À bientôt');
+        if($param === 'logout') {
+            $this->session->set($param, 'À bientôt');
+        } else {
+            $this->session->set($param, 'Votre compte a bien été supprimé');
+        }
         header('Location: ../public/index.php');
     }
 }
