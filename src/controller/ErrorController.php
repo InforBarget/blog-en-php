@@ -2,15 +2,20 @@
 
 namespace App\src\controller;
 
+/**
+ * Contrôleur qui gère les erreurs de manière centralisée
+ */
 class ErrorController extends Controller
 {
+    /** Gestion des vues lors d'une page non trouvée 404 */
     public function errorNotFound()
     {
-        return $this->view->render('error_404');
+        $this->view->render('error_404');
     }
 
+    /** Gestion des vues lors d'une erreur serveur */
     public function errorServer()
     {
-        return $this->view->render('error_500');
+        $this->view->render('error_500');
     }
 }
