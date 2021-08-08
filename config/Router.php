@@ -9,8 +9,8 @@ use Exception;
 class Router
 {
     private $frontController;
-    private $errorController;
     private $backController;
+    private $errorController;
     private $request;
 
     public function __construct()
@@ -30,8 +30,23 @@ class Router
                 if($route === 'article'){
                     $this->frontController->article($this->request->getGet()->get('articleId'));
                 }
-                elseif ($route === 'addArticle'){
+                elseif($route === 'addArticle'){
                     $this->backController->addArticle($this->request->getPost());
+                }
+                elseif($route === 'editArticle'){
+                    $this->backController->editArticle($this->request->getPost(), $this->request->getGet()->get('articleId'));
+                }
+                elseif($route === 'deleteArticle'){
+                    $this->backController->deleteArticle($this->request->getGet()->get('articleId'));
+                }
+                elseif($route === 'addComment'){
+                    $this->frontController->addComment($this->request->getPost(), $this->request->getGet()->get('articleId'));
+                }
+                elseif($route === 'flagComment'){
+                    $this->frontController->flagComment($this->request->getGet()->get('commentId'));
+                }
+                elseif($route === 'deleteComment'){
+                    $this->backController->deleteComment($this->request->getGet()->get('commentId'));
                 }
                 else{
                     $this->errorController->errorNotFound();
